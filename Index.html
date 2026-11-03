@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#17152d">
+<title>Campus Kit</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f3fb;
+  color:#24223a;
+}
+header{
+  background:linear-gradient(135deg,#211b49,#6047b8);
+  color:white;
+  padding:25px 20px 30px;
+  border-radius:0 0 28px 28px;
+}
+.top{display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:23px;font-weight:bold}
+.tag{font-size:12px;background:#ffffff25;padding:7px 10px;border-radius:20px}
+header h1{font-size:25px;margin:25px 0 5px}
+header p{margin:0;color:#ded9ff;font-size:14px}
+main{padding:18px 15px 95px;max-width:650px;margin:auto}
+.section-title{font-size:18px;font-weight:bold;margin:22px 0 12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{
+  background:white;padding:17px;border-radius:18px;
+  box-shadow:0 5px 18px #29205b0c;
+}
+.feature{min-height:112px;cursor:pointer;border:1px solid #eeecf8}
+.feature:active{transform:scale(.98)}
+.emoji{font-size:27px}
+.feature h3{font-size:15px;margin:10px 0 4px}
+.feature p{font-size:12px;color:#777;margin:0}
+.panel{display:none}
+.panel.active{display:block}
+.back{
+  border:0;background:#e9e5ff;color:#513bb1;
+  padding:10px 14px;border-radius:10px;font-weight:bold;
+}
+.panel h2{font-size:22px}
+label{display:block;font-size:13px;font-weight:bold;margin:14px 0 6px}
+input,select{
+  width:100%;padding:13px;border:1px solid #ddd9ed;
+  border-radius:11px;font-size:15px;background:white;
+}
+.btn{
+  width:100%;padding:14px;border:0;border-radius:12px;
+  margin-top:15px;background:#6047b8;color:white;
+  font-size:15px;font-weight:bold;
+}
+.result{
+  margin-top:15px;padding:15px;border-radius:13px;
+  background:#eeeaff;color:#392b82;font-weight:bold;
+  line-height:1.7;
+}
+.question{
+  background:white;padding:17px;border-radius:16px;
+  margin:12px 0;box-shadow:0 4px 15px #2221;
+}
+.option{
+  display:block;width:100%;text-align:left;padding:12px;
+  border:1px solid #ddd9ed;background:white;
+  border-radius:10px;margin-top:9px;font-size:14px;
+}
+.option:disabled{opacity:1}
+.option.correct{background:#dcf8e7;border-color:#35a66a}
+.option.wrong{background:#ffe4e4;border-color:#dc6464}
+.small{font-size:13px;color:#777}
+.task{
+  display:flex;align-items:center;gap:10px;
+  padding:12px;background:white;border-radius:12px;margin-top:9px;
+}
+.task span{flex:1}
+.task.done span{text-decoration:line-through;color:#888}
+.delete{border:0;background:#ffe7e7;color:#b33;padding:8px;border-radius:8px}
+nav{
+  position:fixed;bottom:0;left:0;right:0;
+  display:flex;justify-content:space-around;
+  background:white;padding:12px 5px calc(12px + env(safe-area-inset-bottom));
+  box-shadow:0 -5px 20px #211b4912;
+}
+nav button{border:0;background:none;color:#777;font-size:12px}
+nav button strong{display:block;font-size:20px;margin-bottom:3px}
+nav button.selected{color:#6047b8}
+footer{text-align:center;color:#999;font-size:11px;padding:20px}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="top">
+    <div class="logo">🎓 Campus Kit</div>
+    <div class="tag">STUDENT LIFE</div>
+  </div>
+  <h1>Learn. Plan. Grow.</h1>
+  <p>Your little helper for college life.</p>
+</header>
+
+<main>
+
+<!-- HOME -->
+<section id="home" class="panel active">
+  <div class="section-title">Welcome to Campus Kit 👋</div>
+  <div class="card">
+    <h3>Make your student life easier!</h3>
+    <p class="small">Calculate, practise and organise your daily studies in one place.</p>
+  </div>
+
+  <div class="section-title">Explore Features</div>
+  <div class="grid">
+    <div class="card feature" onclick="showPanel('attendance')">
+      <div class="emoji">📊</div>
+      <h3>Attendance</h3><p>Check your percentage</p>
+    </div>
+    <div class="card feature" onclick="showPanel('marks')">
+      <div class="emoji">📝</div>
+      <h3>Marks Calculator</h3><p>Calculate your result</p>
+    </div>
+    <div class="card feature" onclick="showPanel('quiz')">
+      <div class="emoji">🧠</div>
+      <h3>Quiz Challenge</h3><p>Test your knowledge</p>
+    </div>
+    <div class="card feature" onclick="showPanel('planner')">
+      <div class="emoji">📅</div>
+      <h3>Study Planner</h3><p>Manage your tasks</p>
+    </div>
+  </div>
+  <div class="section-title">Your daily learning tip</div>
+  <div class="card">
+    <p>💡 Consistent practice is more useful than studying everything at once. Try a small quiz every day!</p>
+  </div>
+</section>
+
+<!-- ATTENDANCE -->
+<section id="attendance" class="panel">
+  <button class="back" onclick="showPanel('home')">← Back</button>
+  <h2>📊 Attendance Calculator</h2>
+  <p class="small">Enter your total classes and attended classes.</p>
+  <label>Total classes</label>
+  <input type="number" id="total" min="1" placeholder="Example: 100">
+  <label>Classes attended</label>
+  <input type="number" id="attended" min="0" placeholder="Example: 80">
+  <button class="btn" onclick="calculateAttendance()">Calculate</button>
+  <div id="attendanceResult"></div>
+</section>
+
+<!-- MARKS -->
+<section id="marks" class="panel">
+  <button class="back" onclick="showPanel('home')">← Back</button>
+  <h2>📝 Marks Calculator</h2>
+  <p class="small">Enter marks obtained in five subjects (out of 100).</p>
+  <div id="marksInputs"></div>
+  <button class="btn" onclick="calculateMarks()">Calculate Result</button>
+  <div id="marksResult"></div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" class="panel">
+  <button class="back" onclick="showPanel('home')">← Back</button>
+  <h2>🧠 Computer Quiz</h2>
+  <p class="small">Answer 5 questions. Each question carries 1 mark.</p>
+  <div class="card">
+    <b>Time left: <span id="timer">60</span> seconds</b>
+    <div class="small" id="progress">Question 1 of 5</div>
+  </div>
+  <div id="quizArea"></div>
+  <div id="quizResult"></div>
+  <button class="btn" id="startQuiz" onclick="startQuiz()">Start Quiz</button>
+</section>
+
+<!-- PLANNER -->
+<section id="planner" class="panel">
+  <button class="back" onclick="showPanel('home')">← Back</button>
+  <h2>📅 Study Planner</h2>
+  <p class="small">Add your daily study tasks.</p>
+  <label>Task name</label>
+  <input id="taskInput" placeholder="Example: Practise SQL">
+  <button class="btn" onclick="addTask()">+ Add Task</button>
+  <div class="section-title">My Tasks</div>
+  <div id="taskList"></div>
+</section>
+
+<footer>Campus Kit • Version 1.0 • Made for learners</footer>
+</main>
+
+<nav>
+  <button class="selected" onclick="showPanel('home',this)"><strong>⌂</strong>Home</button>
+  <button onclick="showPanel('attendance',this)"><strong>▥</strong>Attendance</button>
+  <button onclick="showPanel('quiz',this)"><strong>✎</strong>Quiz</button>
+  <button onclick="showPanel('planner',this)"><strong>☷</strong>Planner</button>
+</nav>
+
+<script>
+// NAVIGATION
+function showPanel(id,button){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('selected'));
+  if(button) button.classList.add('selected');
+  else {
+    const navButton=[...document.querySelectorAll('nav button')].find(b=>b.getAttribute('onclick').includes("'"+id+"'"));
+    if(navButton)navButton.classList.add('selected');
+  }
+}
+
+// ATTENDANCE
+function calculateAttendance(){
+  const total=Number(document.getElementById('total').value);
+  const attended=Number(document.getElementById('attended').value);
+  const box=document.getElementById('attendanceResult');
+  if(!Number.isInteger(total)||!Number.isInteger(attended)||total<=0||attended<0||attended>total){
+    box.innerHTML='<div class="result">Please enter valid class numbers.</div>';
+    return;
+  }
+  const percent=(attended/total)*100;
+  box.innerHTML=`<div class="result">Attendance: ${percent.toFixed(2)}%<br>${percent>=75?'You are at or above 75%.':'You are below 75%.'}</div>`;
+}
+
+// MARKS
+const marksBox=document.getElementById('marksInputs');
+for(let i=1;i<=5;i++){
+  marksBox.innerHTML+=`<label>Subject ${i}</label><input type="number" class="mark" min="0" max="100" placeholder="Marks out of 100">`;
+}
+function calculateMarks(){
+  const inputs=[...document.querySelectorAll('.mark')];
+  const values=inputs.map(x=>x.value===''?NaN:Number(x.value));
+  const box=document.getElementById('marksResult');
+  if(values.some(v=>!Number.isFinite(v)||v<0||v>100)){
+    box.innerHTML='<div class="result">Enter valid marks from 0 to 100 in all subjects.</div>';
+    return;
+  }
+  const total=values.reduce((a,b)=>a+b,0);
+  const percentage=total/5;
+  box.innerHTML=`<div class="result">Total: ${total}/500<br>Percentage: ${percentage.toFixed(2)}%<br>Result: ${values.every(v=>v>=40)?'Pass':'Needs improvement'}</div>`;
+}
+
+// QUIZ
+const questions=[
+ {q:'Which language is used to structure a web page?',o:['HTML','SQL','Python','C'],a:0},
+ {q:'Which SQL command retrieves data?',o:['DELETE','SELECT','UPDATE','DROP'],a:1},
+ {q:'Which one is a programming language?',o:['Excel','Python','PowerPoint','Chrome'],a:1},
+ {q:'What does CPU stand for?',o:['Central Processing Unit','Computer Personal Unit','Control Program Utility','Central Print Unit'],a:0},
+ {q:'Which symbol is commonly used for comments in Python?',o:['//','#','<!--','**'],a:1}
+];
+let current=0,score=0,remaining=60,clock=null,answered=false,quizActive=false;
+
+function startQuiz(){
+  clearInterval(clock);
+  current=0;score=0;remaining=60;quizActive=true;
+  document.getElementById('quizResult').innerHTML='';
+  document.getElementById('startQuiz').style.display='none';
+  document.getElementById('timer').textContent=remaining;
+  renderQuestion();
+  clock=setInterval(()=>{
+    remaining--;
+    document.getElementById('timer').textContent=remaining;
+    if(remaining<=0)finishQuiz();
+  },1000);
+}
+function renderQuestion(){
+  if(!quizActive)return;
+  answered=false;
+  const q=questions[current];
+  document.getElementById('progress').textContent=`Question ${current+1} of ${questions.length}`;
+  document.getElementById('quizArea').innerHTML=
+  `<div class="question"><b>${q.q}</b>
+  ${q.o.map((option,i)=>`<button class="option" onclick="answerQuestion(${i})">${option}</button>`).join('')}
+  <p class="small" id="feedback"></p></div>`;
+}
+function answerQuestion(choice){
+  if(answered||!quizActive)return;
+  answered=true;
+  const q=questions[current];
+  const buttons=document.querySelectorAll('.option');
+  buttons.forEach((b,i)=>{
+    b.disabled=true;
+    if(i===q.a)b.classList.add('correct');
+    else if(i===choice)b.classList.add('wrong');
+  });
+  if(choice===q.a)score++;
+  document.getElementById('feedback').textContent=choice===q.a?'Correct answer!':'Correct answer: '+q.o[q.a];
+  setTimeout(()=>{
+    current++;
+    if(current<questions.length)renderQuestion();
+    else finishQuiz();
+  },900);
+}
+function finishQuiz(){
+  if(!quizActive)return;
+  quizActive=false;
+  clearInterval(clock);
+  document.getElementById('quizArea').innerHTML='';
+  document.getElementById('quizResult').innerHTML=
+  `<div class="result">Quiz completed!<br>Your score: ${score}/${questions.length}<br>${score>=4?'Great work!':'Keep practising!'}</div>`;
+  document.getElementById('startQuiz').style.display='block';
+  document.getElementById('startQuiz').textContent='Try Again';
+}
+
+// STUDY PLANNER
+let tasks=JSON.parse(localStorage.getItem('campusTasks')||'[]');
+function saveTasks(){
+  localStorage.setItem('campusTasks',JSON.stringify(tasks));
+  renderTasks();
+}
+function addTask(){
+  const input=document.getElementById('taskInput');
+  const name=input.value.trim();
+  if(!name){alert('Please enter a task name.');return;}
+  tasks.push({name:name,done:false});
+  input.value='';
+  saveTasks();
+}
+function toggleTask(index){
+  tasks[index].done=!tasks[index].done;
+  saveTasks();
+}
+function deleteTask(index){
+  tasks.splice(index,1);
+  saveTasks();
+}
+function renderTasks(){
+  const list=document.getElementById('taskList');
+  if(!tasks.length){
+    list.innerHTML='<p class="small">No tasks yet. Add your first task!</p>';
+    return;
+  }
+  list.innerHTML=tasks.map((task,i)=>`
+    <div class="task ${task.done?'done':''}">
+      <input type="checkbox" style="width:20px" ${task.done?'checked':''} onchange="toggleTask(${i})">
+      <span>${escapeHTML(task.name)}</span>
+      <button class="delete" onclick="deleteTask(${i})">Delete</button>
+    </div>`).join('');
+}
+function escapeHTML(value){
+  return value.replace(/[&<>"']/g,char=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[char]));
+}
+renderTasks();
+</script>
+</body>
+</html>
+  
