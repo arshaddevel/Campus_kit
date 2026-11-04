@@ -1,0 +1,23 @@
+{
+  "name": "Campus Kit",
+  "short_name": "Campus Kit",
+  "description": "Student utility app with attendance, marks, quiz and study planner.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#6047b8",
+  "background_color": "#f4f3fb",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
